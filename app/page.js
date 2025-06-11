@@ -15,6 +15,7 @@ export default async function Home() {
           alt="dictionary_btn"
           width={130}
           height={100}
+          className="cursor-pointer"
         />
       </div>
       <div className="flex flex-col items-center mt-17">
@@ -28,7 +29,7 @@ export default async function Home() {
       {/* 상단 카드*/}
       <div className="flex flex-row items-center mt-20">
         <div className="flex flex-col bg-white w-[356px] min-h-[283px] rounded-[18px] shadow-md py-5 px-6">
-          <span className="text-[13px] font-[500] text-[#a2a2a2]">날짜</span>
+          <span className="text-[13px] font-[500] text-[#a2a2a2]">날짜짜</span>
           <span className="mt-2 text-[24px] font-[700] text-[#414141]">
             미국고용지표 서프라이즈---
           </span>
@@ -70,7 +71,7 @@ export default async function Home() {
         <div className="mt-[17px]">
           {data.data.content.map((economy) => (
             <Link key={economy.id} href={`economy/${economy.id}`}>
-              <div className="bg-white w-full min-h-[206px] py-[30px] px-[29px] rounded-2xl shadow-md">
+              <div className="bg-white w-full min-h-[206px] py-[30px] px-[29px] rounded-2xl shadow-md mb-14">
                 <div>
                   <span className="text-[14px] font-[500] text-[#a2a2a2] ">
                     {economy.createdAt}
