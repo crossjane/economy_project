@@ -1,11 +1,30 @@
+import Search from "@/components/Search";
+import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default async function Home() {
-  const response = await fetch("http://43.201.36.186/_api/v1/economy");
+export default async function Home({ searchParams }) {
+  const param = await searchParams;
+  let loadEconoiesApi = "http://43.201.36.186/_api/v1/economy";
+
+  if (param) {
+    const searchKeyword = param.searchKeyword;
+    if (searchKeyword) {
+      loadEconoiesApi = loadEconoiesApi + `?searchKeyword=${searchKeyword}`;
+    }
+  }
+  const response = await fetch(loadEconoiesApi);
   const data = await response.json();
-  console.log(data);
+
+  const endDate = moment().format("YYYY-MM-DD");
+  const startDate = moment().subtract(6, "day").format("YYYY-MM-DD");
+
+  const weekEconoiesResponse = await fetch(
+    `http://43.201.36.186/_api/v1/economy?startDate=${startDate}&endDate=${endDate}`
+  );
+
+  const weekEconoiesData = await weekEconoiesResponse.json();
   return (
     <div className="flex flex-col px-4">
       {/* 헤더*/}
@@ -27,27 +46,25 @@ export default async function Home() {
         </span>
       </div>
       {/* 상단 카드*/}
-      <div className="flex flex-row items-center mt-20">
-        <div className="flex flex-col bg-white w-[356px] min-h-[283px] rounded-[18px] shadow-md py-5 px-6">
-          <span className="text-[13px] font-[500] text-[#a2a2a2]">날짜짜</span>
-          <span className="mt-2 text-[24px] font-[700] text-[#414141]">
-            미국고용지표 서프라이즈---
-          </span>
-          <div className="border-b-gray-300 border-b-1 my-2"></div>
-          <p className="mt-2 line-clamp-5">
-            5월 미국 고용이 예상을5월 미국 고용이 예상을5월 미국 고용이
-            예상을5월 미국 고용이 예상을5월 미국 고용이 예상을5월 미국 고용이
-            예상을5월 미국 고용이 예상을 5월 미국 고용이 예상을5월 미국 고용이
-            예상을5월 미국 고용이 예상을5월 미국 고용이 예상을5월 미국 고용이
-            예상을5월 미국 고용이 예상을5월 미국 고용이 예상을 5월 미국 고용이
-            예상을5월 미국 고용이 예상을5월 미국 고용이 예상을5월 미국 고용이
-            예상을5월 미국 고용이 예상을5월 미국 고용이 예상을5월 미국 고용이
-            예상을{" "}
-          </p>
-          <div className="flex justify-end mt-3 text-[13px] text-[#595959] font-[500] cursor-pointer">
-            자세히 보기{">"}
+      <div className="flex flex-row items-center mt-20 gap-5">
+        {weekEconoiesData.data.content.map((economy) => (
+          <div
+            className="flex flex-col bg-white w-[356px] min-h-[283px] rounded-[18px] shadow-md py-5 px-6"
+            key={economy.id}
+          >
+            <span className="text-[13px] font-[500] text-[#a2a2a2]">
+              {moment(economy.createdAt).format("YYYY년 MM월 DD일")}
+            </span>
+            <span className="mt-2 text-[24px] font-[700] text-[#414141]">
+              {economy.title}
+            </span>
+            <div className="border-b-gray-300 border-b-1 my-2"></div>
+            <p className="mt-2 line-clamp-5">{economy.contentWithoutHtml}</p>
+            <div className="flex justify-end mt-3 text-[13px] text-[#595959] font-[500] cursor-pointer">
+              자세히 보기{">"}
+            </div>
           </div>
-        </div>
+        ))}
       </div>
 
       {/* 전체뉴스스 */}
@@ -58,20 +75,12 @@ export default async function Home() {
               전체뉴스
             </span>
           </div>
-          <div className="flex flex-row items-center h-[36px]">
-            <input
-              className="bg-white border-1 border-[#D1D1D1] rounded-[5px] h-full pl-[12px] "
-              placeholder="검색어 입력"
-            ></input>
-            <div className="flex justify-center items-center ml-[8px] bg-[#43CD91] pt-[7px] pr-[14px] pb-[7px] pl-[14px] rounded-[5px] h-full cursor-pointer">
-              <span className="text-white font-[500] text-[18px]">검색</span>
-            </div>
-          </div>
+          <Search />
         </div>
-        <div className="mt-[17px]">
+        <div className="mt-[30px]">
           {data.data.content.map((economy) => (
             <Link key={economy.id} href={`economy/${economy.id}`}>
-              <div className="bg-white w-full min-h-[206px] py-[30px] px-[29px] rounded-2xl shadow-md mb-14">
+              <div className="bg-white w-full min-h-[206px] py-[30px] px-[29px] rounded-2xl shadow-md mb-8">
                 <div>
                   <span className="text-[14px] font-[500] text-[#a2a2a2] ">
                     {economy.createdAt}
