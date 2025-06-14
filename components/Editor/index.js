@@ -29,15 +29,19 @@ const extensions = [
 
 function Editor({ content, onChangeContent, onChangeContentWithoutHtml }) {
   return (
-    <EditorProvider
-      slotBefore={<MenuBar />}
-      extensions={extensions}
-      content={content}
-      onUpdate={({ editor }) => {
-        onChangeContent(editor.getHTML());
-        onChangeContentWithoutHtml(editor.getText());
-      }}
-    ></EditorProvider>
+    <div>
+      <EditorProvider
+        slotBefore={<MenuBar />}
+        extensions={extensions}
+        content={content}
+        onUpdate={({ editor }) => {
+          onChangeContent(editor.getHTML());
+          onChangeContentWithoutHtml(editor.getText());
+        }}
+      ></EditorProvider>
+
+ 
+    </div>
   );
 }
 
