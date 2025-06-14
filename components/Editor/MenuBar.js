@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { useCurrentEditor } from "@tiptap/react";
+import { common } from "lowlight";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 
 function MenuBar() {
   const { editor } = useCurrentEditor();
@@ -32,30 +34,6 @@ function MenuBar() {
           } `}
         >
           Italic
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleStrike().run()}
-          disabled={!editor.can().chain().focus().toggleStrike().run()}
-          className={`${basicEditStlye} ${
-            editor.isActive("strike") ? "is-active" : ""
-          } `}
-        >
-          Strike
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleCode().run()}
-          disabled={!editor.can().chain().focus().toggleCode().run()}
-          className={`${basicEditStlye} ${
-            editor.isActive("code") ? "is-active" : ""
-          } `}
-        >
-          Code
-        </button>
-        <button
-          onClick={() => editor.chain().focus().unsetAllMarks().run()}
-          className={`${basicEditStlye}`}
-        >
-          Clear marks
         </button>
         <button
           onClick={() => editor.chain().focus().clearNodes().run()}
@@ -112,26 +90,6 @@ function MenuBar() {
           H4
         </button>
         <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 5 }).run()
-          }
-          className={`${basicEditStlye} ${
-            editor.isActive("heading", { level: 5 }) ? "is-active" : ""
-          }`}
-        >
-          H5
-        </button>
-        <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 6 }).run()
-          }
-          className={`${basicEditStlye} ${
-            editor.isActive("heading", { level: 6 }) ? "is-active" : ""
-          }`}
-        >
-          H6
-        </button>
-        <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={`${basicEditStlye} ${
             editor.isActive("bulletList") ? "is-active" : ""
@@ -153,7 +111,7 @@ function MenuBar() {
             editor.isActive("codeBlock") ? "is-active" : ""
           } `}
         >
-          Code block
+          코드입력
         </button>
         <button
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
@@ -161,33 +119,19 @@ function MenuBar() {
             editor.isActive("blockquote") ? "is-active" : ""
           } `}
         >
-          Blockquote
+          인용문 쓰기
         </button>
         <button
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
           className={`${basicEditStlye}`}
         >
-          Horizontal rule
+          구분선
         </button>
         <button
           onClick={() => editor.chain().focus().setHardBreak().run()}
           className={`${basicEditStlye}`}
         >
           Hard break
-        </button>
-        <button
-          onClick={() => editor.chain().focus().undo().run()}
-          disabled={!editor.can().chain().focus().undo().run()}
-          className={`${basicEditStlye}`}
-        >
-          Undo
-        </button>
-        <button
-          onClick={() => editor.chain().focus().redo().run()}
-          disabled={!editor.can().chain().focus().redo().run()}
-          className={`${basicEditStlye}`}
-        >
-          Redo
         </button>
         <button
           onClick={() => editor.chain().focus().setColor("#958DF1").run()}

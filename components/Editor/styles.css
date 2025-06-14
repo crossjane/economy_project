@@ -1,12 +1,21 @@
-/* Basic editor styles */
+/* css */
+
+/* 기본 마진 제거 */
 .tiptap:first-child {
-  margin-top: 0;
+  margin-top: 10px;
+  width: 95%;
+  padding-right: 10px;
+  padding-left: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-size: medium;
 }
 
-/* List styles */
+/* 리스트 스타일 */
 .tiptap ul,
 .tiptap ol {
-  padding: 0 1rem;
+  padding-left: 1rem;
   margin: 1.25rem 1rem 1.25rem 0.4rem;
 }
 
@@ -16,7 +25,7 @@
   margin-bottom: 0.25em;
 }
 
-/* Heading styles */
+/* 제목 스타일 */
 .tiptap h1,
 .tiptap h2,
 .tiptap h3,
@@ -25,7 +34,7 @@
 .tiptap h6 {
   line-height: 1.1;
   margin-top: 2.5rem;
-  text-wrap: pretty;
+  word-break: keep-all; /* 텍스트 줄바꿈 깔끔하게 */
 }
 
 .tiptap h1,
@@ -52,22 +61,24 @@
   font-size: 1rem;
 }
 
-/* Code and preformatted text styles */
+/* 인라인 코드 */
 .tiptap code {
-  background-color: var(--purple-light);
+  background-color: #f3e8ff; /* 연보라 계열 */
   border-radius: 0.4rem;
-  color: var(--black);
+  color: #000;
   font-size: 0.85rem;
   padding: 0.25em 0.3em;
 }
 
+/* 코드 블럭 */
 .tiptap pre {
-  background: var(--black);
+  background: #f4f4f4;
   border-radius: 0.5rem;
-  color: var(--white);
+  color: #070707;
   font-family: "JetBrainsMono", monospace;
   margin: 1.5rem 0;
   padding: 0.75rem 1rem;
+  overflow-x: auto;
 }
 
 .tiptap pre code {
@@ -77,14 +88,18 @@
   padding: 0;
 }
 
+/* 인용문 */
 .tiptap blockquote {
-  border-left: 3px solid var(--gray-3);
+  border-left: 3px solid #d1d5db;
   margin: 1.5rem 0;
   padding-left: 1rem;
+  color: #4b5563;
+  font-style: italic;
 }
 
+/* 구분선 */
 .tiptap hr {
   border: none;
-  border-top: 1px solid var(--gray-2);
+  border-top: 0.7px solid #d1d5db;
   margin: 2rem 0;
 }

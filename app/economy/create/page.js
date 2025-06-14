@@ -18,7 +18,7 @@ const EconomyCreate = () => {
     setContentWithoutHtml(value);
   }
   return (
-    <div className="flex flex-col w-[1116px]">
+    <div className="flex flex-col items-center w-[1116px]">
       <div className="bg-white w-full rounded-2xl shadow-md mt-20 min-h-100">
         <Editor
           content={content}
@@ -26,7 +26,7 @@ const EconomyCreate = () => {
           onChangeContentWithoutHtml={onChangeContentWithoutHtml}
         />
       </div>
-      <div className="flex flex-row items-center justify-center text-white bg-[#43CD91] w-100 rounded-md mt-10 py-2 cursor-pointer">
+      <div className="flex flex-row items-center justify-center text-white bg-[#43CD91] w-[200px] rounded-md mt-10 py-2 cursor-pointer hover:bg-[#30996c]">
         <div>저장하기</div>
       </div>
     </div>

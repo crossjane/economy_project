@@ -46,7 +46,7 @@ export default async function Home({ searchParams }) {
         </span>
       </div>
       {/* 상단 카드*/}
-      <div className="flex flex-row items-center mt-20 gap-5">
+      <div className="flex flex-row items-center mt-20 gap-5 ">
         {weekEconoiesData.data.content.map((economy) => (
           <div
             className="flex flex-col bg-white w-[356px] min-h-[283px] rounded-[18px] shadow-md py-5 px-6"

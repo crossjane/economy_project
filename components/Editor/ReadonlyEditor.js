@@ -8,19 +8,17 @@ function ReadonlyEditor({ content }) {
   const editor = useEditor({
     extensions: [StarterKit],
     content,
-    editable: true,
   });
 
   if (!editor) {
     return null;
   }
   return (
-    <div className="w-[90%] border border-gray-300 rounded-md focus-within:border-blue-500">
+    <div className="w-[90%] mt-10">
       <EditorContent
         editor={editor}
-        className="px-2 py-1 w-full focus:outline-none"
+        className="px-2 py-1 w-full focus:outline-none tiptap"
       />
-   
     </div>
   );
 }
