@@ -8,6 +8,7 @@ function ReadonlyEditor({ content }) {
   const editor = useEditor({
     extensions: [StarterKit],
     content,
+    editable: false,
   });
 
   if (!editor) {
