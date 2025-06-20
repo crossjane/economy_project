@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import react from "react";
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import ReactPaginate from "react-paginate";
-import Pagenation from "../PaginatedItems";
-import PaginatedItems from "../PaginatedItems";
 
-function WrapperSearchPagination({ data, currentItems }) {
+function WrapperSearchPagination({ data }) {
   console.log("데이터", data);
+
+  function onPageChange(event) {
+    console.log("event :", event);
+  }
 
   return (
     <div className="mt-[30px]">
@@ -32,7 +32,16 @@ function WrapperSearchPagination({ data, currentItems }) {
           </div>
         </Link>
       ))}
-      <PaginatedItems itemsPerPage={5} />
+      <div className="flex flex-col mb-[30px] justify-center items-center">
+        <ReactPaginate
+          nextLabel=">"
+          className="flex flex-row gap-[10px]"
+          onPageChange={onPageChange}
+          pageCount={data.data.totalPages}
+          previousLabel="<"
+          renderOnZeroPageCount={null}
+        />
+      </div>
     </div>
   );
 }

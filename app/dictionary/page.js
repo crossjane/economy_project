@@ -1,8 +1,6 @@
-import Search from "@/components/Search";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-
 
 export default async function Dictinary() {
   const response = await fetch("http://43.201.36.186/_api/v1/dictionary");
@@ -11,12 +9,7 @@ export default async function Dictinary() {
   return (
     <div className="flex flex-col  items-center mt-30">
       <div className=" flex flex-row justify-end items-end w-[1116px] mb-10">
-        <Link
-          href={{
-            pathname: "/economy",
-            query: { page: "1" },
-          }}
-        >
+        <Link href={"/"}>
           <Image
             src="/btn_economyNews.svg"
             alt="btn_news"
@@ -42,7 +35,6 @@ export default async function Dictinary() {
           </span>
         </div>
       </div>
-      <Search />
       <div className="flex flex-row justify-center items-center mb-20">
         <input
           placeholder="검색어 입력"
