@@ -1,14 +1,31 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import ReactPaginate from "react-paginate";
 
 function WrapperSearchPagination({ data }) {
-  console.log("데이터", data);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [currentPage, setCurrentPage] = useState();
+
+
+
+  useEffect(() => {
+    setCurrentPage(searchParams.get("page"));
+    if (searchParams && searchParams.get("searchKeyword")) {
+      setSearchKeywordInput(searchParams.get("searchKeyword"));
+    }
+  }, [searchParams]);
+
+    console.log("currentPage", currentPage);
+
+  // 페이지를 뒤로 옮길떄마다 서치파람 페이지 url의 넘버를 가져와서 +1 더한다음  push ? 해서 . 하는것이 아닌가 ?
 
   function onPageChange(event) {
-    console.log("event :", event);
+    const keyword = searchParams.get("searchKeyword");
+    router.push(`?searchKeyword=${keyword}&page=${currentPage + 1}`);
   }
 
   return (
@@ -32,7 +49,7 @@ function WrapperSearchPagination({ data }) {
           </div>
         </Link>
       ))}
-      <div className="flex flex-col mb-[30px] justify-center items-center">
+      <div className="flex flex-col mb-[30px] justify-center items-center cursor-pointer">
         <ReactPaginate
           nextLabel=">"
           className="flex flex-row gap-[10px]"

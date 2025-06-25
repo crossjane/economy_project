@@ -8,13 +8,18 @@ import React from "react";
 
 export default async function Home({ searchParams }) {
   const param = await searchParams;
+  // 확인 불가능? searchKeywrod 그리고 왜 await로 받는건지?.searchParams get해서 꺼내와야 하는것 아닌까 ? param 에 넣어서 searchKEyword로 꺼낼수 있는이유??
+  //url 이 어떤 형태로 오는지 ? searchParams는 url아닌지
   console.log("serachParams", searchParams);
-  let loadEconoiesApi = "http://43.201.36.186/_api/v1/economy";
+  let loadEconoiesApi = `http://43.201.36.186/_api/v1/economy`;
 
   if (param) {
     const searchKeyword = param.searchKeyword;
+    // searchParam의 데이터를 어떻게 읽?
+    // const page = param.
     if (searchKeyword) {
-      loadEconoiesApi = loadEconoiesApi + `?searchKeyword=${searchKeyword}`;
+      loadEconoiesApi =
+        loadEconoiesApi + `?searchKeyword=${searchKeyword}&page=${page}`;
     }
   }
   const response = await fetch(loadEconoiesApi);

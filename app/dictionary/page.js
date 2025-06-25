@@ -1,10 +1,25 @@
-import moment from "moment";
+import DictionarySearch from "@/components/DictionarySearch";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function Dictinary() {
-  const response = await fetch("http://43.201.36.186/_api/v1/dictionary");
-  const data = await response.json();
+export default async function Dictinary({ searchParams }) {
+  const param = await searchParams;
+  console.log("서치파람", param);
+  // 검색어가 들어옴.
+  let loadDictionaryApi = "http://43.201.36.186/_api/v1/dictionary/";
+
+  if (param) {
+    const searchKeyword = param.searchKeyword;
+    if (searchKeyword) {
+      loadDictionaryApi = loadDictionaryApi + `?searchKeyword=${searchKeyword}`;
+    }
+  }
+
+  const response = await fetch(loadDictionaryApi);
+  const searchedData = await response.json();
+  console.log("response", response);
+
+  console.log("서치치데이터", searchedData);
 
   return (
     <div className="flex flex-col  items-center mt-30">
@@ -35,16 +50,14 @@ export default async function Dictinary() {
           </span>
         </div>
       </div>
-      <div className="flex flex-row justify-center items-center mb-20">
-        <input
-          placeholder="검색어 입력"
-          className="bg-white p-2 rounded-md border-1 border-gray-300 w-100"
-        ></input>
-        <div className="m-3 flex flex-row justify-center text-white bg-[#43CD91] w-[100px] rounded-md py-2 cursor-pointer hover:bg-[#30996c]">
-          검색
-        </div>
+      <DictionarySearch />
+      <div>
+        {searchedData.data.map((content) =>
+          content.word === searchKeyword ? (
+            <div key={content.id}>{content.word}</div>
+          ) : null
+        )}
       </div>
-      <div>디플레이션: 물가가 지속적으로 하락하는 현상</div>
     </div>
   );
 }
