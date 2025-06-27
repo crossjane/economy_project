@@ -1,4 +1,3 @@
-import Search from "@/components/Search";
 import Slide from "@/components/Slide";
 import WrapperSearchPagination from "@/components/WrapperSearchPagination/WrapperSearchPagination";
 import moment from "moment";
@@ -8,19 +7,15 @@ import React from "react";
 
 export default async function Home({ searchParams }) {
   const param = await searchParams;
-  // 확인 불가능? searchKeywrod 그리고 왜 await로 받는건지?.searchParams get해서 꺼내와야 하는것 아닌까 ? param 에 넣어서 searchKEyword로 꺼낼수 있는이유??
-  //url 이 어떤 형태로 오는지 ? searchParams는 url아닌지
-  console.log("serachParams", searchParams);
   let loadEconoiesApi = `http://43.201.36.186/_api/v1/economy`;
 
   if (param) {
-    const searchKeyword = param.searchKeyword;
-    // searchParam의 데이터를 어떻게 읽?
-    // const page = param.
-    if (searchKeyword) {
-      loadEconoiesApi =
-        loadEconoiesApi + `?searchKeyword=${searchKeyword}&page=${page}`;
-    }
+    const searchKeyword = param.searchKeyword ? param.searchKeyword : "";
+    const page = param.page ? param.page : 0;
+
+    loadEconoiesApi =
+      loadEconoiesApi +
+      `?searchKeyword=${searchKeyword}&page=${page <= 0 ? page : page - 1}`;
   }
   const response = await fetch(loadEconoiesApi);
   const data = await response.json();
@@ -91,17 +86,7 @@ export default async function Home({ searchParams }) {
       </div>
 
       {/* 전체뉴스스 */}
-      <div>
-        <div className="flex flex-col mt-40">
-          <div className="flex flex-row">
-            <span className="flex-1 text-[25px] font-[500] text-[#414141]">
-              전체뉴스
-            </span>
-            <Search />
-          </div>
-          <WrapperSearchPagination data={data} />
-        </div>
-      </div>
+      <WrapperSearchPagination data={data} />
     </div>
   );
 }

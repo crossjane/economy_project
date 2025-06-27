@@ -1,4 +1,5 @@
 import DictionarySearch from "@/components/DictionarySearch";
+import WrapperSearchPaginationDictionary from "@/components/WrapperSearchPagination/WarapperSesarchPaginationDictionary";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,20 +7,18 @@ export default async function Dictinary({ searchParams }) {
   const param = await searchParams;
   console.log("서치파람", param);
   // 검색어가 들어옴.
-  let loadDictionaryApi = "http://43.201.36.186/_api/v1/dictionary/";
+  let loadDictionaryApi = "http://43.201.36.186/_api/v1/dictionary";
 
   if (param) {
-    const searchKeyword = param.searchKeyword;
-    if (searchKeyword) {
-      loadDictionaryApi = loadDictionaryApi + `?searchKeyword=${searchKeyword}`;
-    }
+    const searchKeyword = param.searchKeyword ?? "";
+    const page = param.page ?? 1;
+
+    loadDictionaryApi =
+      loadDictionaryApi + `?searchKeyword=${searchKeyword}&page=${page - 1}`;
   }
 
   const response = await fetch(loadDictionaryApi);
   const searchedData = await response.json();
-  console.log("response", response);
-
-  console.log("서치치데이터", searchedData);
 
   return (
     <div className="flex flex-col  items-center mt-30">
@@ -50,14 +49,7 @@ export default async function Dictinary({ searchParams }) {
           </span>
         </div>
       </div>
-      <DictionarySearch />
-      <div>
-        {searchedData.data.map((content) =>
-          content.word === searchKeyword ? (
-            <div key={content.id}>{content.word}</div>
-          ) : null
-        )}
-      </div>
+      <WrapperSearchPaginationDictionary data={searchedData.data} />
     </div>
   );
 }
